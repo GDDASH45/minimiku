@@ -1,0 +1,16 @@
+menu "MiniMiku init"
+
+config MINIMIKU_HWNAME
+    string "MiniMiku hardware name"
+    default ""
+    help
+      Sets the hardware name exposed by MiniMiku in sysfs.
+
+config MINIMIKU_DORK
+    tristate "MiniMiku /dev/dork device"
+    default m
+    help
+      creates /dev/dork, if you want it built in, select y
+      if Not. keep it m for module
+
+endmenu

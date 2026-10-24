@@ -1,5 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0-only
 
+source "init/MiniMiku/Kconfig"
+
 source "scripts/Kconfig.toolchain"
 
 config CONSTRUCTORS

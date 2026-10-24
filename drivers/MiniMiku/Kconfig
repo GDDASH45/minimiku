@@ -1,0 +1,14 @@
+menu "MiniMiku"
+
+config MIKU_MLOG
+	bool "MiniMiku logging device (/dev/mlog)"
+	default y
+	help
+	  Enable the MiniMiku logging device.
+
+	  This option provides the MiniMiku-specific /dev/mlog
+	  character device for accessing MiniMiku kernel logs.
+
+	  If unsure, say Y.
+
+endmenu

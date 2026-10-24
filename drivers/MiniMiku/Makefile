@@ -1,0 +1,1 @@
+obj-$(CONFIG_MINIMIKU_MLOG) += mlog.o

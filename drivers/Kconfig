@@ -49,6 +49,8 @@ source "drivers/scsi/Kconfig"
 
 source "drivers/ata/Kconfig"
 
+source "drivers/MiniMiku/Kconfig"
+
 source "drivers/md/Kconfig"
 
 source "drivers/target/Kconfig"

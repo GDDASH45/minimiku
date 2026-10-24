@@ -661,6 +661,19 @@ static int __init rdinit_setup(char *str)
 }
 __setup("rdinit=", rdinit_setup);
 
+/* Stub for a SafeMode boot param: minimiku.safemode */
+bool minimiku_safemode;
+
+static int __init minimiku_safemode_setup(char *str)
+{
+	minimiku_safemode = true;
+	pr_info("MiniMiku: Safe mode enabled\n");
+	return 1;
+}
+
+__setup("minimiku.safemode", minimiku_safemode_setup);
+
+
 #ifndef CONFIG_SMP
 static inline void setup_nr_cpu_ids(void) { }
 static inline void smp_prepare_cpus(unsigned int maxcpus) { }

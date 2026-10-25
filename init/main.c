@@ -1695,7 +1695,8 @@ static int __ref kernel_init(void *unused)
 	if (!try_to_run_init_process("/sbin/init") ||
 	    !try_to_run_init_process("/etc/init") ||
 	    !try_to_run_init_process("/bin/init") ||
-	    !try_to_run_init_process("/bin/sh"))
+	    !try_to_run_init_process("/bin/sh") ||
+		!try_to_run_init_process("/usr/sbin/init"))
 		return 0;
 
 	panic("No working init found.  Try passing init= option to kernel. "

@@ -13,6 +13,8 @@
 #include <linux/proc_fs.h>
 #include <linux/seq_file.h>
 #include <linux/errno.h>
+#include <linux/minimiku_stat.h>
+#include <linux/minimiku_safemem.h>
 
 // =========== No MiniMiku proc subsystem boot parameter ==========
 
@@ -120,6 +122,11 @@ static int __init minimiku_init(void)
         pr_err("MiniMiku: Failed to create /proc/MiniMiku\n");
         return -ENOMEM;
     }
+
+    // Initialize the minimiku stat subsystem
+    ret = minimiku_stat_init(minimiku_proc_dir);
+    if (ret)
+        goto err_remove_dir; // ouch
 
     ret = minimiku_version_init();
     if (ret)

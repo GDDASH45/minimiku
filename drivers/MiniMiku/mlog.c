@@ -38,7 +38,7 @@ static const struct file_operations mlog_fops = {
 	.owner = THIS_MODULE,
 	.open = mlog_open,
 	.release = mlog_release,
-	.llseek = no_llseek,
+	.llseek = noop_llseek,
 };
 
 static int __init mlog_init(void)

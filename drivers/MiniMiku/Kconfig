@@ -1,6 +1,6 @@
 menu "MiniMiku"
 
-config MIKU_MLOG
+config MINIMIKU_MLOG
 	bool "MiniMiku logging device (/dev/mlog)"
 	default y
 	help
@@ -10,5 +10,11 @@ config MIKU_MLOG
 	  character device for accessing MiniMiku kernel logs.
 
 	  If unsure, say Y.
+
+config MINIMIKU_INIT
+	tristate "MiniMiku initialization module"
+	help
+	  Build the MiniMiku initialization component as a loadable
+	  kernel module or include it directly in the kernel.
 
 endmenu

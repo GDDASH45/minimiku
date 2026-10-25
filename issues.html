@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MiniMiku — Issues</title>
+</head>
+<body>
+    <header>
+        <a href="index.html">← MiniMiku</a>
+        <h1>Report an Issue</h1>
+        <p>Help improve MiniMiku Linux by reporting bugs or suggesting features.</p>
+    </header>
+
+    <main>
+        <form id="issue-form">
+            <label for="issue-type">Issue type</label>
+            <select id="issue-type" name="issue-type" required>
+                <option value="bug">Bug report</option>
+                <option value="feature">Feature request</option>
+                <option value="other">Other</option>
+            </select>
+
+            <label for="issue-title">Title</label>
+            <input
+                type="text"
+                id="issue-title"
+                name="issue-title"
+                placeholder="Briefly describe the issue"
+                required
+                maxlength="200"
+            >
+
+            <label for="issue-description">Description</label>
+            <textarea
+                id="issue-description"
+                name="issue-description"
+                placeholder="What happened? What did you expect to happen?"
+                rows="8"
+                required
+            ></textarea>
+
+            <label for="issue-version">MiniMiku version</label>
+            <input
+                type="text"
+                id="issue-version"
+                name="issue-version"
+                placeholder="e.g. 10.25.2026"
+            >
+
+            <label for="issue-system">System information</label>
+            <textarea
+                id="issue-system"
+                name="issue-system"
+                placeholder="Optional: hardware, kernel version, BIOS/UEFI, etc."
+                rows="4"
+            ></textarea>
+
+            <button type="submit">Continue to submit issue ↗</button>
+        </form>
+    </main>
+
+    <script src="issues.js"></script>
+</body>
+</html>

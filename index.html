@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color" content="#071414">
+    <meta name="description" content="MiniMiku Linux — Brave Diva. A Linux distribution built with passion, customization, and freedom.">
+
+    <title>MiniMiku Linux — Brave Diva</title>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+        :root {
+            --bg: #071414;
+            --bg-soft: #0b1e1d;
+            --panel: #102624;
+            --teal: #54f5d0;
+            --teal-dark: #19b99b;
+            --white: #edfff9;
+            --muted: #8ba9a2;
+            --border: rgba(84, 245, 208, 0.15);
+            --mono: "DM Mono", monospace;
+            --sans: "Space Grotesk", sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 90px;
+        }
+
+        body {
+            min-height: 100vh;
+            overflow-x: hidden;
+            background: var(--bg);
+            color: var(--white);
+            font-family: var(--sans);
+        }
+
+        body::before {
+            position: fixed;
+            inset: 0;
+            z-index: -2;
+            background:
+                radial-gradient(ellipse at 70% 10%, rgba(25, 185, 155, 0.13), transparent 40%),
+                radial-gradient(ellipse at 5% 60%, rgba(25, 185, 155, 0.06), transparent 35%);
+            content: "";
+            pointer-events: none;
+        }
+
+        body::after {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            background-image:
+                linear-gradient(rgba(84, 245, 208, 0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(84, 245, 208, 0.025) 1px, transparent 1px);
+            background-size: 48px 48px;
+            content: "";
+            pointer-events: none;
+            mask-image: linear-gradient(to bottom, black, transparent 90%);
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button, a {
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        ::selection {
+            background: var(--teal);
+            color: var(--bg);
+        }
+
+        .container {
+            width: min(1160px, calc(100% - 48px));
+            margin-inline: auto;
+        }
+
+        .mono {
+            font-family: var(--mono);
+        }
+
+        .topline {
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--teal), var(--teal-dark), transparent);
+        }
+
+        /* Navigation */
+
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid var(--border);
+            background: rgba(7, 20, 20, 0.86);
+            backdrop-filter: blur(18px);
+        }
+
+        nav {
+            display: flex;
+            min-height: 78px;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.13rem;
+            font-weight: 700;
+            letter-spacing: -0.05em;
+        }
+
+        .brand-icon {
+            display: grid;
+            width: 39px;
+            height: 39px;
+            place-items: center;
+            border: 1px solid rgba(84, 245, 208, 0.45);
+            border-radius: 11px;
+            background: rgba(84, 245, 208, 0.08);
+            color: var(--teal);
+            font-size: 1.25rem;
+            box-shadow: 0 0 24px rgba(84, 245, 208, 0.08);
+        }
+
+        .brand small {
+            display: block;
+            margin-top: 2px;
+            color: var(--muted);
+            font-family: var(--mono);
+            font-size: 0.6rem;
+            font-weight: 400;
+            letter-spacing: 0.16em;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            color: var(--muted);
+            font-size: 0.88rem;
+        }
+
+        .nav-links a {
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--teal);
+        }
+
+        .nav-github {
+            padding: 10px 16px;
+            border: 1px solid var(--border);
+            border-radius: 7px;
+            color: var(--teal);
+            font-family: var(--mono);
+            font-size: 0.76rem;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .nav-github:hover {
+            border-color: var(--teal);
+            background: rgba(84, 245, 208, 0.08);
+        }
+
+        /* Hero */
+
+        .hero {
+            position: relative;
+            display: grid;
+            min-height: 690px;
+            grid-template-columns: 1.15fr 0.85fr;
+            align-items: center;
+            gap: 50px;
+            padding-block: 100px;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            background: rgba(84, 245, 208, 0.035);
+            color: var(--teal);
+            font-family: var(--mono);
+            font-size: 0.72rem;
+            letter-spacing: 0.06em;
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--teal);
+            box-shadow: 0 0 12px var(--teal);
+            animation: blink 2s infinite;
+        }
+
+        .hero h1 {
+            margin-top: 30px;
+            font-size: clamp(4rem, 8vw, 7.3rem);
+            font-weight: 700;
+            line-height: 0.88;
+            letter-spacing: -0.095em;
+        }
+
+        .hero h1 .accent {
+            display: block;
+            color: var(--teal);
+            text-shadow: 0 0 65px rgba(84, 245, 208, 0.17);
+        }
+
+        .hero-subtitle {
+            margin-top: 28px;
+            color: var(--muted);
+            font-size: 1.12rem;
+            line-height: 1.8;
+        }
+
+        .hero-subtitle strong {
+            color: var(--white);
+            font-weight: 500;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 13px;
+            margin-top: 35px;
+        }
+
+        .button {
+            display: inline-flex;
+            min-height: 49px;
+            align-items: center;
+            justify-content: center;
+            gap: 11px;
+            padding: 0 20px;
+            border: 1px solid transparent;
+            border-radius: 6px;
+            font-family: var(--mono);
+            font-size: 0.79rem;
+            transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+        }
+
+        .button:hover {
+            transform: translateY(-3px);
+        }
+
+        .button-primary {
+            background: var(--teal);
+            color: #061513;
+            font-weight: 500;
+            box-shadow: 0 0 35px rgba(84, 245, 208, 0.12);
+        }
+
+        .button-primary:hover {
+            box-shadow: 0 0 42px rgba(84, 245, 208, 0.28);
+        }
+
+        .button-secondary {
+            border-color: var(--border);
+            background: rgba(255, 255, 255, 0.015);
+            color: var(--white);
+        }
+
+        .button-secondary:hover {
+            border-color: rgba(84, 245, 208, 0.45);
+            background: rgba(84, 245, 208, 0.04);
+        }
+
+        .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 22px;
+            margin-top: 45px;
+            color: var(--muted);
+            font-family: var(--mono);
+            font-size: 0.68rem;
+        }
+
+        .hero-meta span::before {
+            margin-right: 8px;
+            color: var(--teal);
+            content: "✳";
+        }
+
+        /* Decorative system panel */
+
+        .visual {
+            position: relative;
+            display: grid;
+            min-height: 390px;
+            place-items: center;
+        }
+
+        .halo {
+            position: absolute;
+            width: 340px;
+            max-width: 100%;
+            aspect-ratio: 1;
+            border: 1px solid rgba(84, 245, 208, 0.16);
+            border-radius: 50%;
+            box-shadow:
+                0 0 80px rgba(84, 245, 208, 0.04),
+                inset 0 0 80px rgba(84, 245, 208, 0.03);
+            animation: rotate 35s linear infinite;
+        }
+
+        .halo::before,
+        .halo::after {
+            position: absolute;
+            border: 1px solid rgba(84, 245, 208, 0.18);
+            border-radius: 50%;
+            content: "";
+        }
+
+        .halo::before {
+            inset: 22px;
+        }
+
+        .halo::after {
+            inset: -20px 65px;
+            transform: rotate(45deg);
+        }
+
+        .core {
+            position: relative;
+            display: grid;
+            width: 195px;
+            height: 195px;
+            place-items: center;
+            border: 1px solid rgba(84, 245, 208, 0.45);
+            border-radius: 35%;
+            background:
+                radial-gradient(circle at 30% 20%, rgba(84, 245, 208, 0.16), transparent 55%),
+                linear-gradient(145deg, #102e2a, #091615);
+            box-shadow:
+                0 0 90px rgba(84, 245, 208, 0.13),
+                inset 0 0 35px rgba(84, 245, 208, 0.07);
+            transform: rotate(-8deg);
+        }
+
+        .core span {
+            color: var(--teal);
+            font-size: 7rem;
+            font-weight: 700;
+            letter-spacing: -0.12em;
+            text-shadow: 0 0 50px rgba(84, 245, 208, 0.28);
+            transform: rotate(8deg) translateX(-4px);
+        }
+
+        .float-label {
+            position: absolute;
+            padding: 11px 13px;
+            border: 1px solid var(--border);
+            border-radius: 5px;
+            background: rgba(9, 27, 25, 0.9);
+            color: var(--teal);
+            font-family: var(--mono);
+            font-size: 0.65rem;
+            box-shadow: 0 10px 45px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .float-label.one {
+            top: 35px;
+            right: -2px;
+        }
+
+        .float-label.two {
+            bottom: 44px;
+            left: -2px;
+        }
+
+        .float-label.three {
+            right: -8px;
+            bottom: 94px;
+            color: var(--muted);
+        }
+
+        /* Ticker */
+
+        .ticker {
+            overflow: hidden;
+            border-block: 1px solid var(--border);
+            background: rgba(84, 245, 208, 0.035);
+        }
+
+        .ticker-inner {
+            display: flex;
+            min-height: 60px;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+            color: var(--muted);
+            font-family: var(--mono);
+            font-size: 0.68rem;
+            letter-spacing: 0.07em;
+        }
+
+        .ticker b {
+            color: var(--teal);
+            font-weight: 400;
+        }
+
+        /* Shared sections */
+
+        section {
+            padding-block: 105px;
+        }
+
+        .section-heading {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 30px;
+            margin-bottom: 43px;
+        }
+
+        .eyebrow {
+            margin-bottom: 14px;
+            color: var(--teal);
+            font-family: var(--mono);
+            font-size: 0.72rem;
+            letter-spacing: 0.13em;
+            text-transform: uppercase;
+        }
+
+        .section-heading h2 {
+            max-width: 650px;
+            font-size: clamp(2.3rem, 5vw, 4rem);
+            line-height: 1.04;
+            letter-spacing: -0.075em;
+        }
+
+        .section-heading p {
+            max-width: 350px;
+            color: var(--muted);
+            font-size: 0.94rem;
+            line-height: 1.8;
+        }
+
+        /* Features */
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .feature {
+            position: relative;
+            min-height: 240px;
+            overflow: hidden;
+            padding: 28px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: linear-gradient(145deg, rgba(16, 38, 36, 0.9), rgba(8, 23, 22, 0.8));
+            transition: border-color 0.25s, transform 0.25s;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+            border-color: rgba(84, 245, 208, 0.48);
+        }
+
+        .feature::after {
+            position: absolute;
+            right: -40px;
+            bottom: -65px;
+            width: 150px;
+            height: 150px;
+            border: 1px solid rgba(84, 245, 208, 0.09);
+            border-radius: 50%;
+            box-shadow: 0 0 0 20px rgba(84, 245, 208, 0.02), 0 0 0 40px rgba(84, 245, 208, 0.015);
+            content: "";
+            pointer-events: none;
+        }
+
+        .feature-number {
+            color: var(--teal);
+            font-family: var(--mono);
+            font-size: 0.68rem;
+        }
+
+        .feature-icon {
+            display: grid;
+            width: 45px;
+            height: 45px;
+            margin-top: 25px;
+            place-items: center;
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            background: rgba(84, 245, 208, 0.06);
+            color: var(--teal);
+            font-size: 1.25rem;
+        }
+
+        .feature h3 {
+            margin-top: 21px;
+            font-size: 1.16rem;
+            letter-spacing: -0.035em;
+        }
+
+        .feature p {
+            max-width: 300px;
+            margin-top: 10px;
+            color: var(--muted);
+            font-size: 0.86rem;
+            line-height: 1.75;
+        }
+
+        /* Identity section */
+
+        .identity {
+            display: grid;
+            grid-template-columns: 0.9fr 1.1fr;
+            align-items: center;
+            gap: 75px;
+            padding: 55px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            background:
+                radial-gradient(ellipse at 10% 90%, rgba(25, 185, 155, 0.09), transparent 55%),
+                var(--bg-soft);
+        }
+
+        .identity-art {
+            position: relative;
+            display: grid;
+            min-height: 270px;
+            place-items: center;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background:
+                linear-gradient(rgba(84, 245, 208, 0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(84, 245, 208, 0.04) 1px, transparent 1px),
+                #091817;
+            background-size: 25px 25px;
+        }
+
+        .identity-art::before {
+            position: absolute;
+            width: 190px;
+            height: 190px;
+            border: 1px solid rgba(84, 245, 208, 0.23);
+            border-radius: 50%;
+            box-shadow: 0 0 60px rgba(84, 245, 208, 0.09);
+            content: "";
+        }
+
+        .identity-art strong {
+            position: relative;
+            color: var(--teal);
+            font-size: clamp(4rem, 8vw, 6rem);
+            letter-spacing: -0.1em;
+            text-shadow: 0 0 45px rgba(84, 245, 208, 0.2);
+        }
+
+        .identity-copy h2 {
+            font-size: clamp(2.4rem, 4vw, 3.5rem);
+            line-height: 1;
+            letter-spacing: -0.075em;
+        }
+
+        .identity-copy h2 span {
+            color: var(--teal);
+        }
+
+        .identity-copy p {
+            margin-top: 23px;
+            color: var(--muted);
+            font-size: 0.94rem;
+            line-height: 1.9;
+        }
+
+        .identity-copy .mono {
+            display: block;
+            margin-top: 23px;
+            color: var(--teal);
+            font-size: 0.72rem;
+            line-height: 1.8;
+        }
+
+        /* Repository CTA */
+
+        .repository {
+            position: relative;
+            overflow: hidden;
+            padding: 65px 35px;
+            border: 1px solid rgba(84, 245, 208, 0.27);
+            border-radius: 10px;
+            background:
+                radial-gradient(ellipse at 50% 120%, rgba(84, 245, 208, 0.13), transparent 65%),
+                linear-gradient(120deg, #0d2421, #0a1918);
+            text-align: center;
+        }
+
+        .repository::before {
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(135deg, transparent, transparent 12px, rgba(84, 245, 208, 0.018) 12px, rgba(84, 245, 208, 0.018) 13px);
+            content: "";
+            pointer-events: none;
+        }
+
+        .repository-content {
+            position: relative;
+        }
+
+        .repository h2 {
+            font-size: clamp(2.5rem, 6vw, 4.7rem);
+            letter-spacing: -0.08em;
+            line-height: 1;
+        }
+
+        .repository h2 span {
+            color: var(--teal);
+        }
+
+        .repository p {
+            max-width: 560px;
+            margin: 22px auto 28px;
+            color: var(--muted);
+            line-height: 1.8;
+        }
+
+        .repository .hero-actions {
+            justify-content: center;
+            margin-top: 0;
+        }
+
+        /* Footer */
+
+        footer {
+            margin-top: 95px;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-inner {
+            display: flex;
+            min-height: 105px;
+            align-items: center;
+            justify-content: space-between;
+            gap: 25px;
+        }
+
+        .footer-note {
+            color: var(--muted);
+            font-family: var(--mono);
+            font-size: 0.68rem;
+            line-height: 1.9;
+        }
+
+        .footer-note strong {
+            color: var(--teal);
+            font-weight: 400;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 22px;
+            color: var(--muted);
+            font-size: 0.8rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--teal);
+        }
+
+        /* Motion */
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(22px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.35; }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                scroll-behavior: auto !important;
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            .reveal {
+                opacity: 1;
+                transform: none;
+            }
+        }
+
+        /* Responsive layout */
+
+        @media (max-width: 850px) {
+            .nav-links {
+                gap: 17px;
+            }
+
+            .hero {
+                min-height: auto;
+                grid-template-columns: 1fr;
+                gap: 15px;
+                padding-block: 85px 55px;
+            }
+
+            .hero h1 {
+                font-size: clamp(4rem, 13vw, 7rem);
+            }
+
+            .visual {
+                min-height: 350px;
+            }
+
+            .halo {
+                width: 300px;
+            }
+
+            .section-heading {
+                align-items: start;
+                flex-direction: column;
+            }
+
+            .features {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .identity {
+                grid-template-columns: 1fr;
+                gap: 35px;
+                padding: 30px;
+            }
+
+            .ticker-inner {
+                justify-content: center;
+                flex-wrap: wrap;
+                padding-block: 17px;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .container {
+                width: calc(100% - 32px);
+            }
+
+            nav {
+                min-height: 68px;
+            }
+
+            .nav-links a:not(.nav-github) {
+                display: none;
+            }
+
+            .nav-links {
+                gap: 0;
+            }
+
+            .brand {
+                font-size: 1rem;
+            }
+
+            .hero {
+                padding-top: 70px;
+            }
+
+            .hero h1 {
+                font-size: clamp(3.8rem, 17vw, 5.7rem);
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .hero-meta {
+                gap: 13px;
+                flex-direction: column;
+            }
+
+            .visual {
+                min-height: 320px;
+            }
+
+            .halo {
+                width: 250px;
+            }
+
+            .core {
+                width: 155px;
+                height: 155px;
+            }
+
+            .core span {
+                font-size: 5.5rem;
+            }
+
+            .float-label.one {
+                top: 20px;
+                right: 0;
+            }
+
+            .float-label.two {
+                bottom: 25px;
+                left: 0;
+            }
+
+            .float-label.three {
+                right: 0;
+                bottom: 75px;
+            }
+
+            section {
+                padding-block: 72px;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+            }
+
+            .feature {
+                min-height: 215px;
+            }
+
+            .identity {
+                padding: 20px;
+            }
+
+            .identity-art {
+                min-height: 220px;
+            }
+
+            .repository {
+                padding: 50px 20px;
+            }
+
+            .footer-inner {
+                align-items: start;
+                flex-direction: column;
+                justify-content: center;
+                padding-block: 28px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="topline"></div>
+
+    <header>
+        <nav class="container">
+            <a class="brand" href="#home" aria-label="MiniMiku home">
+                <span class="brand-icon">M</span>
+                <span>
+                    MiniMiku Linux
+                    <small>BRAVE DIVA</small>
+                </span>
+            </a>
+
+            <div class="nav-links">
+                <a href="#about">About</a>
+                <a href="#features">Features</a>
+                <a href="#project">Project</a>
+                <a class="nav-github" href="https://github.com/GDDASH45/minimiku" target="_blank" rel="noopener noreferrer">GITHUB ↗</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero container" id="home">
+            <div class="hero-content">
+                <div class="status">
+                    <span class="status-dot"></span>
+                    AN INDEPENDENT LINUX PROJECT
+                </div>
+
+                <h1>
+                    SMALL<br>
+                    NAME.<br>
+                    <span class="accent">BIG VOICE.</span>
+                </h1>
+
+                <p class="hero-subtitle">
+                    Meet <strong>MiniMiku Linux.</strong><br>
+                    A personal Linux distribution built around customization,
+                    experimentation, and the freedom to build something different.
+                </p>
+
+                <div class="hero-actions">
+                    <a class="button button-primary" href="https://github.com/GDDASH45/minimiku" target="_blank" rel="noopener noreferrer">
+                        Explore the source <span>↗</span>
+                    </a>
+                    <a class="button button-secondary" href="#about">
+                        Discover MiniMiku <span>↓</span>
+                    </a>
+                </div>
+
+                <div class="hero-meta">
+                    <span>Linux-based</span>
+                    <span>Independently developed</span>
+                    <span>Built with passion</span>
+                </div>
+            </div>
+
+            <div class="visual" aria-hidden="true">
+                <div class="halo"></div>
+                <div class="core"><span>M</span></div>
+
+                <div class="float-label one">MINIMIKU // SYSTEM</div>
+                <div class="float-label two">BRAVE DIVA_</div>
+                <div class="float-label three">OPEN SOURCE / LINUX</div>
+            </div>
+        </section>
+
+        <div class="ticker">
+            <div class="container ticker-inner">
+                <span><b>01</b> &nbsp; BUILD YOUR OWN WAY</span>
+                <span><b>02</b> &nbsp; EXPERIMENT WITHOUT LIMITS</span>
+                <span><b>03</b> &nbsp; MAKE LINUX YOURS</span>
+            </div>
+        </div>
+
+        <section class="container" id="features">
+            <div class="section-heading reveal">
+                <div>
+                    <div class="eyebrow">/ What drives the project</div>
+                    <h2>Made to be explored.<br>Built to be yours.</h2>
+                </div>
+                <p>
+                    MiniMiku is a space for learning, developing, and shaping
+                    a Linux experience one component at a time.
+                </p>
+            </div>
+
+            <div class="features">
+                <article class="feature reveal">
+                    <div class="feature-number">FEATURE_001</div>
+                    <div class="feature-icon">⌘</div>
+                    <h3>Linux at its core</h3>
+                    <p>Built on the Linux kernel, with distro-level customization and room to experiment with how the system comes together.</p>
+                </article>
+
+                <article class="feature reveal">
+                    <div class="feature-number">FEATURE_002</div>
+                    <div class="feature-icon">⚙</div>
+                    <h3>Made by its developer</h3>
+                    <p>An independently developed project where system design, configuration, and implementation are part of the journey.</p>
+                </article>
+
+                <article class="feature reveal">
+                    <div class="feature-number">FEATURE_003</div>
+                    <div class="feature-icon">⌁</div>
+                    <h3>A work in progress</h3>
+                    <p>Explore the source code, follow development, and see how the distribution evolves over time.</p>
+                </article>
+
+                <article class="feature reveal">
+                    <div class="feature-number">FEATURE_004</div>
+                    <div class="feature-icon">◇</div>
+                    <h3>Personal identity</h3>
+                    <p>Brave Diva gives MiniMiku its own identity: a project with a distinct name, aesthetic, and direction.</p>
+                </article>
+
+                <article class="feature reveal">
+                    <div class="feature-number">FEATURE_005</div>
+                    <div class="feature-icon">⌘</div>
+                    <h3>Source-first development</h3>
+                    <p>The repository is where you can inspect the code, track changes, and discover what's actually implemented.</p>
+                </article>
+
+                <article class="feature reveal">
+                    <div class="feature-number">FEATURE_006</div>
+                    <div class="feature-icon">✳</div>
+                    <h3>Driven by curiosity</h3>
+                    <p>Learn by building. Experiment with Linux internals and turn ideas into real system components.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="container" id="about">
+            <div class="identity reveal">
+                <div class="identity-art" aria-hidden="true">
+                    <strong>ミク</strong>
+                </div>
+
+                <div class="identity-copy">
+                    <div class="eyebrow">/ Project identity</div>
+                    <h2>Introducing<br><span>Brave Diva.</span></h2>
+                    <p>
+                        MiniMiku isn't just a name on a boot screen. It's an ongoing
+                        Linux development project, shaped by hands-on work with the
+                        kernel, system components, and the distribution itself.
+                    </p>
+                    <p>
+                        The goal is to keep building, keep learning, and make every
+                        part of the system feel intentional.
+                    </p>
+                    <span class="mono">MINIMIKU LINUX // BRAVE DIVA<br>AN INDEPENDENT LINUX DISTRIBUTION</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="container" id="project">
+            <div class="repository reveal">
+                <div class="repository-content">
+                    <div class="eyebrow">/ The source is the story</div>
+                    <h2>Curious?<br><span>Look inside.</span></h2>
+                    <p>
+                        Visit the MiniMiku repository to explore the actual source,
+                        inspect development progress, and follow the project.
+                    </p>
+
+                    <div class="hero-actions">
+                        <a class="button button-primary" href="https://github.com/GDDASH45/minimiku" target="_blank" rel="noopener noreferrer">
+                            Open GitHub repository ↗
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container footer-inner">
+            <div class="footer-note">
+                <strong>MINIMIKU LINUX</strong> — BRAVE DIVA<br>
+                A personal Linux distribution project.
+            </div>
+
+            <div class="footer-links">
+                <a href="#home">Back to top ↑</a>
+                <a href="https://github.com/GDDASH45/minimiku" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+            </div>
+
+            <div class="footer-note">
+                MADE WITH CURIOSITY<span style="color: var(--teal)">.</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        const revealElements = document.querySelectorAll(".reveal");
+
+        if ("IntersectionObserver" in window) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("visible");
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.12
+            });
+
+            revealElements.forEach((element) => observer.observe(element));
+        } else {
+            revealElements.forEach((element) => element.classList.add("visible"));
+        }
+    </script>
+</body>
+</html>

@@ -1,8 +1,11 @@
-
 // SPDX-License-Identifier: GPL-2.0
 /*
  * MiniMiku Linux
  * init/mini.c
+ * 
+ * Developers:
+ *  GDDASH45: Create the initial init/mini.c for MiniMiku
+ *      Subsystem initialization
  */
 
 #include <linux/init.h>
@@ -10,6 +13,18 @@
 #include <linux/proc_fs.h>
 #include <linux/seq_file.h>
 #include <linux/errno.h>
+
+// =========== No MiniMiku proc subsystem boot parameter ==========
+
+static bool minimiku_nommproc;
+
+static int __init minimiku_nommproc_setup(char *str)
+{
+    minimiku_nommproc = true;
+    return 1;
+}
+
+__setup("minimiku.nommproc", minimiku_nommproc_setup);
 
 // ======= Version subsystem =============
 
@@ -94,6 +109,11 @@ static int __init minimiku_init(void)
 
     pr_info("MiniMiku: Brave Diva\n");
     pr_info("MiniMiku: Starting MiniMiku subsystem\n");
+
+    if (minimiku_nommproc) {
+        pr_info("MiniMiku: /proc/MiniMiku disabled by boot parameter\n");
+        return 0;
+    }
 
     minimiku_proc_dir = proc_mkdir("MiniMiku", NULL);
     if (!minimiku_proc_dir) {
